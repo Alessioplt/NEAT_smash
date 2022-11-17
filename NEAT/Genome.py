@@ -56,7 +56,9 @@ class Genome:
                 self.add_node(sensor_name, output_name)
 
     def mutate_connection(self, chance):
-        pass
+        connection_not_made = self.gene_manager.get_all_connection_not_made()
+        choice = random.choice(connection_not_made)
+        self.add_connection(choice[0], choice[1], random.uniform(-2, 2))
 
     def mutate_enable_disable(self, connection):
         self.connections[connection][1] = not self.connections[connection][1]
@@ -69,5 +71,3 @@ class Genome:
 
     def mutate(self, chance_mutate, mutation_intensity):
         pass
-
-
