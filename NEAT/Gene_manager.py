@@ -15,7 +15,7 @@ class GeneManager:
 
     def add_gene(self, name, node_type, behavior=None):
         if node_type == "hidden":
-            name=f"H_{self.hidden_name}"
+            name = f"H_{self.hidden_name}"
             self.hidden_name += 1
         gene = Gene(name, node_type, behavior)
         self.genes.append(gene)
@@ -52,3 +52,16 @@ class GeneManager:
                 return connection
         return self.add_connection(node_in, node_out)
 
+    def get_existing_connection(self, node_in, node_out):
+        for connection in self.connections:
+            if connection.node_in == node_in and connection.node_out == node_out:
+                return connection
+        return None
+
+    def get_all_connection_not_made(self):
+        temp: []
+        for sensor in self.get_all_gene_type("sensor") + self.get_all_gene_type("hidden"):
+            for output in self.get_all_gene_type("hidden") + self.get_all_gene_type("output"):
+                if self.get_existing_connection(sensor, output) is None:
+                    temp.append([sensor, output])
+        return temp
