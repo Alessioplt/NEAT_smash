@@ -59,7 +59,7 @@ class GeneManager:
         return None
 
     def get_all_connection_not_made(self):
-        temp: []
+        temp = []
         for sensor in self.get_all_gene_type("sensor") + self.get_all_gene_type("hidden"):
             for output in self.get_all_gene_type("hidden") + self.get_all_gene_type("output"):
                 if self.get_existing_connection(sensor, output) is None:
