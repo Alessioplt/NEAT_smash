@@ -37,7 +37,7 @@ class Genome:
         # dummy name because hidden gene are automatically named anyway
         if gene is None:
             gene = self.gene_manager.add_gene("dummy name", "hidden")
-        self.genes.append(gene)
+            self.genes.append(gene)
 
         connection = self.find_connection(sensor_name, output_name)
         self.connections[connection][1] = False
@@ -48,15 +48,13 @@ class Genome:
     # add randomly a new node (pick an already existing if not in this genome)
     def mutate_node(self, chance):
         done = False
-        hiddens = self.gene_manager.get_hidden_unique(self.genes)
-        sensor, output = None, None
-        while sensor == output:
-            sensor = self.gene_manager.get_all_gene_type("hidden") + self.gene_manager.get_all_gene_type("sensor")
-            output = self.gene_manager.get_all_gene_type("hidden") + self.gene_manager.get_all_gene_type("output")
+        connection_made = self.gene_manager.get_all_connection_made()
         if random.randint(1, 100) <= chance:
             done = True
-            sensor_name = random.choice(sensor).name
-            output_name = random.choice(output).name
+            choice = random.choice(connection_made)
+            sensor_name = choice[0].name
+            output_name = choice[1].name
+            hiddens = self.gene_manager.get_hidden_unique(self.genes)
             if len(hiddens) == 0:
                 self.add_node(sensor_name, output_name)
             else:

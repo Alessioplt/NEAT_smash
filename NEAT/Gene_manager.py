@@ -34,8 +34,9 @@ class GeneManager:
         return temp
 
     def get_hidden_unique(self, already_exist):
+        hidden = self.get_all_gene_type("hidden")
         temp = self.get_all_gene_type("hidden")
-        for value in temp:
+        for value in hidden:
             if value in already_exist:
                 temp.remove(value)
         return temp
@@ -62,6 +63,14 @@ class GeneManager:
         temp = []
         for sensor in self.get_all_gene_type("sensor") + self.get_all_gene_type("hidden"):
             for output in self.get_all_gene_type("hidden") + self.get_all_gene_type("output"):
-                if self.get_existing_connection(sensor, output) is None:
+                if self.get_existing_connection(sensor, output) is None and sensor!=output:
+                    temp.append([sensor, output])
+        return temp
+
+    def get_all_connection_made(self):
+        temp = []
+        for sensor in self.get_all_gene_type("sensor") + self.get_all_gene_type("hidden"):
+            for output in self.get_all_gene_type("hidden") + self.get_all_gene_type("output"):
+                if self.get_existing_connection(sensor, output) is not None and sensor!=output:
                     temp.append([sensor, output])
         return temp
