@@ -74,3 +74,22 @@ class GeneManager:
                 if self.get_existing_connection(sensor, output) is not None and sensor!=output:
                     temp.append([sensor, output])
         return temp
+
+    # -------------------Fitness Calculation------------------------------------------------
+
+    #find the latest connection name by name (connection 10 > than connection 9)
+    def get_biggest_connection(self, genome):
+        pass
+
+    def calculate_number_excess_genes(self, genome_1, genome_2):
+        pass
+
+    def calculate_number_disjoint_genes(self, genome_1, genome_2):
+        pass
+
+    def calculate_weight_diff(self, genome_1, genome_2):
+        pass
+
+    def calculate_fitness(self, genome_1, genome_2, excess_coefficient, disjoint_coefficient, weight_diff_coefficient):
+        pass
+
