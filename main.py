@@ -18,13 +18,9 @@ new_genome = Genome.Genome(new_gene_manager)
 new_genome.create(22)
 #new_genome.show_connections()
 
-Graph().create_graph(new_genome.connections, new_gene_manager.get_all_gene_type("sensor"),
-                                            new_gene_manager.get_all_gene_type("output"),
-                                            new_gene_manager.get_all_gene_type("hidden"))
+Graph().create_graph(new_genome.connections, new_gene_manager)
 
 print("new node")
 new_genome.mutate(10000, 1)
 
-Graph().create_graph(new_genome.connections,  new_gene_manager.get_all_gene_type("sensor"),
-                                            new_gene_manager.get_all_gene_type("output"),
-                                            new_gene_manager.get_all_gene_type("hidden"))
+Graph().create_graph(new_genome.connections, new_gene_manager)
