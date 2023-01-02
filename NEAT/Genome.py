@@ -99,12 +99,20 @@ class Genome:
             self.connections[connection][0] = random.uniform(-2, 2)
         return done
 
+    def mutate_weight_shift_sign(self, chance):
+        done = False
+        connection = random.choice(list(self.connections.keys()))
+        if random.randint(1, 100) <= chance:
+            done = True
+            self.connections[connection][0] = -self.connections[connection][0]
+        return done
+
     # chance mutate between 0 and 100
     def mutate(self, chance_mutate, mutation_intensity):
         chance_holder = chance_mutate
         for _ in range(mutation_intensity):
             chance_mutate = chance_holder
-            division = 5
+            division = 6
             if self.mutate_node(chance_mutate/division) is False:
                 division -= 1
             if self.mutate_connection(chance_mutate/division) is False:
@@ -112,5 +120,7 @@ class Genome:
             if self.mutate_enable_disable(chance_mutate/division) is False:
                 division -= 1
             if self.mutate_weight_shift(chance_mutate/division) is False:
+                division -= 1
+            if self.mutate_weight_shift_sign(chance_mutate/division) is False:
                 division -= 1
             self.mutate_weight_random(chance_mutate/division)

@@ -1,8 +1,6 @@
-import random
-
 from NEAT import Gene_manager
 from NEAT import Genome
-from visualise_genome import Graph
+from NEAT.visualise_genome import Graph
 from NEAT import all_functions
 
 
@@ -20,10 +18,13 @@ new_genome = Genome.Genome(new_gene_manager)
 new_genome.create(22)
 #new_genome.show_connections()
 
-graph = Graph()
-graph.create_graph(new_genome.connections,  new_gene_manager.get_all_gene_type("sensor"),
+Graph().create_graph(new_genome.connections, new_gene_manager.get_all_gene_type("sensor"),
                                             new_gene_manager.get_all_gene_type("output"),
                                             new_gene_manager.get_all_gene_type("hidden"))
+
 print("new node")
-#new_genome.mutate(10000, 1)
-#new_genome.show_connections()
+new_genome.mutate(10000, 1)
+
+Graph().create_graph(new_genome.connections,  new_gene_manager.get_all_gene_type("sensor"),
+                                            new_gene_manager.get_all_gene_type("output"),
+                                            new_gene_manager.get_all_gene_type("hidden"))
