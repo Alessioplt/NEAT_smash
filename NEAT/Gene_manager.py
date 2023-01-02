@@ -79,17 +79,54 @@ class GeneManager:
 
     #find the latest connection name by name (connection 10 > than connection 9)
     def get_biggest_connection(self, genome):
-        pass
+        value = 0
+        for connection in genome.connections:
+            if connection.name > value:
+                value = connection.name
+        return value
+
+
 
     def calculate_number_excess_genes(self, genome_1, genome_2):
-        pass
+        excess = []
+        genome_1_biggest = self.get_biggest_connection(genome_1)
+        genome_2_biggest = self.get_biggest_connection(genome_2)
+        if genome_1_biggest > genome_2_biggest:
+            for connection in genome_1.connections:
+                if connection.name > genome_2_biggest:
+                    excess.append(connection)
+        else:
+            for connection in genome_2.connections:
+                if connection.name > genome_1_biggest:
+                    excess.append(connection)
+        return len(excess)
 
     def calculate_number_disjoint_genes(self, genome_1, genome_2):
-        pass
+        disjoint = []
+        for connection in genome_1.connections:
+            work = True
+            for connection_2 in genome_2.connections:
+                if connection == connection_2:
+                    work = False
+            if work:
+                disjoint.append(connection)
+        for connection in genome_2.connections:
+            work = True
+            for connection_2 in genome_1.connections:
+                if connection == connection_2:
+                    work = False
+            if work:
+                disjoint.append(connection)
+        return len(disjoint)
 
     def calculate_weight_diff(self, genome_1, genome_2):
-        pass
+        return None
 
     def calculate_fitness(self, genome_1, genome_2, excess_coefficient, disjoint_coefficient, weight_diff_coefficient):
-        pass
+        #calculate all the values necesarry
+        number_excess_genes = self.calculate_number_excess_genes(genome_1, genome_2)
+        number_disjoint_genes = self.calculate_number_disjoint_genes(genome_1, genome_2)
+        weight_diff = self.calculate_weight_diff(genome_1, genome_2)
 
+
+#todo make a graphical array like in the paper page 109: nn.cs.utexas.edu/downloads/papers/stanley.ec02.pdf

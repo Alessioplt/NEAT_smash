@@ -30,7 +30,8 @@ class Genome:
 
     def show_connections(self):
         for connection in self.connections.keys():
-            print(connection.node_in.name + "->" + connection.node_out.name, self.connections[connection])
+            print(f"({connection.name}) {connection.node_in.name}->{connection.node_out.name}",
+                  self.connections[connection])
 
     # ajoute un gene sur une connection, ayant pour effet de la coupé en deux
     def add_node(self, sensor_name, output_name, gene=None):
