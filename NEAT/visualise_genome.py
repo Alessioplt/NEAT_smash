@@ -16,27 +16,22 @@ class Graph:
         layer_in = 0
         layer_hidden = -0.5
         layer_out = 0
+        for value in number_input:
+            pos[value.name] = (0, layer_in)
+            layer_in += 3
+        for value in number_output:
+            pos[value.name] = (2, layer_out)
+            layer_out += 3
         for connection in connections.keys():
             self.add_edge(G, connection.node_in.name, connection.node_out.name, (float("%.4f" % connections[connection][0])))
             if connection.node_in.name not in pos:
-                if connection.node_in in number_input:
-
-                    pos[connection.node_in.name] = (0, layer_in)
-                    if layer_in >= 0:
-                        layer_in += 3
-                    layer_in = layer_in * -1
-                else:
+                if connection.node_in not in number_input:
                     pos[connection.node_in.name] = (1, layer_hidden)
                     if layer_hidden >= 0:
                         layer_hidden += 1
                     layer_hidden = layer_hidden * -1
             if connection.node_out.name not in pos:
-                if connection.node_out in number_output:
-                    pos[connection.node_out.name] = (2, layer_out)
-                    if layer_out >= 0:
-                        layer_out += 3
-                    layer_out = layer_out * -1
-                else:
+                if connection.node_out not in number_output:
                     pos[connection.node_out.name] = (1, layer_hidden)
                     if layer_hidden >= 0:
                         layer_hidden += 1
