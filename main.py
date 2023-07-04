@@ -22,15 +22,12 @@ for keys in speciation.keys():
     print(f"new groupe")
     print("Pere")
     dadGene = keys
-    Graph().create_graph(dadGene.connections, gene_manager.get_all_gene_type("sensor"),
-                         gene_manager.get_all_gene_type("output"),
-                         gene_manager.get_all_gene_type("hidden"))
+    Graph().create_graph(dadGene.connections, gene_manager)
 
     for value in speciation[keys]:
         print("Fils")
-        Graph().create_graph(value.connections, gene_manager.get_all_gene_type("sensor"),
-                             gene_manager.get_all_gene_type("output"),
-                             gene_manager.get_all_gene_type("hidden"))
+        Graph().create_graph(value.connections, gene_manager)
+    break
 
 """print("new node")
 new_genome.mutate(20, 1)
