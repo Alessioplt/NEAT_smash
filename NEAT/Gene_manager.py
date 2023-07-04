@@ -63,7 +63,7 @@ class GeneManager:
         temp = []
         for sensor in self.get_all_gene_type("sensor") + self.get_all_gene_type("hidden"):
             for output in self.get_all_gene_type("hidden") + self.get_all_gene_type("output"):
-                if self.get_existing_connection(sensor, output) is None and sensor!=output:
+                if self.get_existing_connection(sensor, output) is None and sensor != output:
                     temp.append([sensor, output])
         return temp
 
@@ -71,6 +71,6 @@ class GeneManager:
         temp = []
         for sensor in self.get_all_gene_type("sensor") + self.get_all_gene_type("hidden"):
             for output in self.get_all_gene_type("hidden") + self.get_all_gene_type("output"):
-                if self.get_existing_connection(sensor, output) is not None and sensor!=output:
+                if self.get_existing_connection(sensor, output) is not None and sensor != output:
                     temp.append([sensor, output])
         return temp
