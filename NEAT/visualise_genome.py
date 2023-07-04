@@ -8,13 +8,9 @@ import networkx as nx
             "darkorange",
         """
 class Graph:
-    def create_graph(self, connections, number_input, number_output, number_hidden):
-        subset_sizes = [len(number_input), len(number_hidden), len(number_output)]
-        subset_color = [
-            "gold",
-            "violet",
-            "limegreen",
-        ]
+    def create_graph(self, connections, gene_manager):
+        number_input = gene_manager.get_all_gene_type("sensor")
+        number_output = gene_manager.get_all_gene_type("output")
         G = nx.Graph()
         pos = {}
         layer_in = 0
