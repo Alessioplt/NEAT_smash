@@ -1,4 +1,6 @@
 import itertools
+import random
+
 import matplotlib.pyplot as plt
 import networkx as nx
 """            "violet",
@@ -49,7 +51,12 @@ class Graph:
         nx.draw_networkx_labels(G, pos, font_size=10, font_family="sans-serif")
         # edge weight labels
         edge_labels = nx.get_edge_attributes(G, "weight")
-        nx.draw_networkx_edge_labels(G, pos, edge_labels, label_pos=0.69)
+        for value in edge_labels.keys():
+            edge_label = {value: edge_labels[value]}
+            position = random.randrange(10, 40) / 100
+            position2 = random.randrange(60, 90) / 100
+            choice = random.choice([position, position2])
+            nx.draw_networkx_edge_labels(G, pos, edge_label, label_pos=choice)
         nx.set_node_attributes(G, pos, 'coord')
 
         ax = plt.gca()
