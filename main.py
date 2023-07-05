@@ -1,6 +1,6 @@
 from NEAT import Gene_manager
-from NEAT import Genome
-from NEAT.visualise_genome import Graph
+from NEAT.graph.visualise_genome import Graph
+from NEAT.graph.visualise_sepciation import show_repartition
 from NEAT import all_functions
 from NEAT import Genome_manager
 
@@ -28,6 +28,8 @@ for keys in speciation.keys():
         print("Fils")
         Graph().create_graph(value.connections, gene_manager)
     break
+
+show_repartition(speciation)
 
 """print("new node")
 new_genome.mutate(20, 1)
