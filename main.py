@@ -1,7 +1,6 @@
 from NEAT import Gene_manager
-from NEAT.graph.visualise_genome import Graph
 from NEAT.graph.visualise_sepciation import show_repartition
-from NEAT import all_functions
+from Game import all_functions
 from NEAT import Genome_manager
 
 gene_manager = Gene_manager.GeneManager()
