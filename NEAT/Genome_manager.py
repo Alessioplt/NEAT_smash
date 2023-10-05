@@ -110,15 +110,13 @@ class GenomeManager:
 
     # threshold is the moment where 2 score become too far away
     def new_speciation(self, excess_coefficient, disjoint_coefficient, weight_diff_coefficient, threshold):
-        print(self.genomes)
-        print(self.speciation)
+        self.clean_speciation()
         for value in self.genomes:
             lowest_score = 999
             key_holder = None
             for key in self.speciation.keys():
                 fitness = calculate_fitness(key, value, excess_coefficient, disjoint_coefficient,
                                             weight_diff_coefficient)
-                print("fitness", fitness)
                 if fitness < threshold:
                     if fitness < lowest_score:
                         lowest_score = fitness
@@ -126,7 +124,6 @@ class GenomeManager:
                 else:
                     self.speciation[value] = []
                     break
-            print("final", lowest_score, "\n")
             if lowest_score == 999:
                 self.speciation[value] = []
             else:

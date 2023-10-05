@@ -1,4 +1,5 @@
 from NEAT import Gene_manager
+from NEAT.graph.visualise_genome import Graph
 from NEAT.graph.visualise_sepciation import show_repartition
 from Game import all_functions
 from NEAT import Genome_manager
@@ -16,9 +17,25 @@ genome_manager = Genome_manager.GenomeManager()
 for i in range(200):
     genome_manager.create_genome(gene_manager, 5)
 
-speciation = genome_manager.new_speciation(1, 1, 0.2, 1.63)
-print(speciation)
-#for keys in speciation.keys():
+speciation = genome_manager.new_speciation(1, 1, 0.15, 1.65)
+show_repartition(speciation)
+
+Graph().create_graph(genome_manager.genomes[0].connections, gene_manager)
+
+print("new node")
+for genome in genome_manager.genomes:
+    try:
+        genome.mutate(20, 1)
+    except Exception as e:
+        print(e, genome.connections)
+        Graph().create_graph(genome.connections, gene_manager)
+        break
+Graph().create_graph(genome_manager.genomes[0].connections, gene_manager)
+speciation = genome_manager.new_speciation(1, 1, 0.15, 1.65)
+show_repartition(speciation)
+
+
+
 #    print(f"new groupe")
 #    print("Pere")
 #    dadGene = keys
@@ -28,13 +45,3 @@ print(speciation)
 #        print("Fils")
 #        Graph().create_graph(value.connections, gene_manager)
 #    break
-
-show_repartition(speciation)
-
-"""print("new node")
-new_genome.mutate(20, 1)
-
-Graph().create_graph(new_genome.connections,  new_gene_manager.get_all_gene_type("sensor"),
-                                            new_gene_manager.get_all_gene_type("output"),
-                                            new_gene_manager.get_all_gene_type("hidden"))
-"""

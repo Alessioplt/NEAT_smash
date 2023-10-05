@@ -45,16 +45,17 @@ class Genome:
         self.add_connection(connection.node_in, gene, 1)
         self.add_connection(gene, connection.node_out, self.connections[connection][0])
 
+
     # -------------------Mutation------------------------------------------------
     # add randomly a new node (pick an already existing if not in this genome)
     def mutate_node(self, chance):
         done = False
-        connection_made = self.gene_manager.get_all_connection_made()
+        connection_made = self.gene_manager.get_all_connection_made(self)
         if random.randint(1, 100) <= chance:
             done = True
             choice = random.choice(connection_made)
-            sensor_name = choice[0].name
-            output_name = choice[1].name
+            sensor_name = choice.node_in.name
+            output_name = choice.node_out.name
             hiddens = self.gene_manager.get_hidden_unique(self.genes)
             if len(hiddens) == 0:
                 self.add_node(sensor_name, output_name)
@@ -65,7 +66,7 @@ class Genome:
     # randomly add new connection between two genes
     def mutate_connection(self, chance):
         done = False
-        connection_not_made = self.gene_manager.get_all_connection_not_made()
+        connection_not_made = self.gene_manager.get_all_connection_not_made(self)
         choice = random.choice(connection_not_made)
         if random.randint(1, 100) <= chance:
             done = True
