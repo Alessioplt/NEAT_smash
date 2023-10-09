@@ -2,6 +2,10 @@ import random
 import melee
 
 
+def flatten_position(x, y):
+    return x + y
+
+
 def get_frame(game_state):
     return game_state.frame
 
@@ -11,7 +15,11 @@ def get_distance(game_state):
 
 
 def get_projectiles(game_state):
-    return game_state.projectiles
+    if len(game_state.projectiles) < 1:
+        return game_state.projectiles
+    coord = game_state.projectiles[0].position
+    coord = flatten_position(coord[0], coord[1])
+    return coord
 
 
 def get_stage(game_state):
@@ -19,23 +27,33 @@ def get_stage(game_state):
 
 
 def get_ecb_bottom(game_state):
-    return game_state.players[1].ecb_bottom
+    coord = game_state.players[1].ecb_bottom
+    coord = flatten_position(coord[0], coord[1])
+    return coord
 
 
 def get_ecb_left(game_state):
-    return game_state.players[1].ecb_left
+    coord = game_state.players[1].ecb_left
+    coord = flatten_position(coord[0], coord[1])
+    return coord
 
 
 def get_ecb_right(game_state):
-    return game_state.players[1].ecb_right
+    coord = game_state.players[1].ecb_right
+    coord = flatten_position(coord[0], coord[1])
+    return coord
 
 
 def get_ecb_top(game_state):
-    return game_state.players[1].ecb_top
+    coord = game_state.players[1].ecb_top
+    coord = flatten_position(coord[0], coord[1])
+    return coord
 
 
 def get_position(game_state):
-    return game_state.players[1].position
+    coord = game_state.players[1].position
+    coord = flatten_position(coord.x, coord.y)
+    return coord
 
 
 def get_stock(game_state):
@@ -55,11 +73,15 @@ def get_action_frame(game_state):
 
 
 def get_facing(game_state):
-    return game_state.players[1].facing
+    if game_state.players[1].facing:
+        return 1
+    return -1
 
 
 def get_hitlag_left(game_state):
-    return game_state.players[1].hitlag_left
+    if game_state.players[1].hitlag_left:
+        return 1
+    return -1
 
 
 def get_hitstun_frames_left(game_state):
@@ -71,7 +93,9 @@ def get_invulnerability_left(game_state):
 
 
 def get_invulnerable(game_state):
-    return game_state.players[1].invulnerable
+    if game_state.players[1].invulnerable:
+        return 1
+    return -1
 
 
 def get_jumps_left(game_state):
@@ -79,15 +103,21 @@ def get_jumps_left(game_state):
 
 
 def get_moonwalkwarning(game_state):
-    return game_state.players[1].moonwalkwarning
+    if game_state.players[1].moonwalkwarning:
+        return 1
+    return -1
 
 
 def get_off_stage(game_state):
-    return game_state.players[1].off_stage
+    if game_state.players[1].off_stage:
+        return 1
+    return -1
 
 
 def get_on_ground(game_state):
-    return game_state.players[1].on_ground
+    if game_state.players[1].on_ground:
+        return 1
+    return -1
 
 
 def get_shield_strength(game_state):
@@ -115,23 +145,33 @@ def get_speed_y_self(game_state):
 
 
 def get_opponent_ecb_bottom(game_state):
-    return game_state.players[2].ecb_bottom
+    coord = game_state.players[2].ecb_bottom
+    coord = flatten_position(coord[0], coord[1])
+    return coord
 
 
 def get_opponent_ecb_left(game_state):
-    return game_state.players[2].ecb_left
+    coord = game_state.players[2].ecb_left
+    coord = flatten_position(coord[0], coord[1])
+    return coord
 
 
 def get_opponent_ecb_right(game_state):
-    return game_state.players[2].ecb_right
+    coord = game_state.players[2].ecb_right
+    coord = flatten_position(coord[0], coord[1])
+    return coord
 
 
 def get_opponent_ecb_top(game_state):
-    return game_state.players[2].ecb_top
+    coord = game_state.players[2].ecb_top
+    coord = flatten_position(coord[0], coord[1])
+    return coord
 
 
 def get_opponent_position(game_state):
-    return game_state.players[2].position
+    coord = game_state.players[2].position
+    coord = flatten_position(coord.x, coord.y)
+    return coord
 
 
 def get_opponent_stock(game_state):
@@ -151,11 +191,15 @@ def get_opponent_action_frame(game_state):
 
 
 def get_opponent_facing(game_state):
-    return game_state.players[2].facing
+    if game_state.players[2].facing:
+        return 1
+    return -1
 
 
 def get_opponent_hitlag_left(game_state):
-    return game_state.players[2].hitlag_left
+    if game_state.players[2].hitlag_left:
+        return 1
+    return -1
 
 
 def get_opponent_hitstun_frames_left(game_state):
@@ -167,7 +211,9 @@ def get_opponent_invulnerability_left(game_state):
 
 
 def get_opponent_invulnerable(game_state):
-    return game_state.players[2].invulnerable
+    if game_state.players[2].invulnerable:
+        return 1
+    return -1
 
 
 def get_opponent_jumps_left(game_state):
@@ -175,15 +221,21 @@ def get_opponent_jumps_left(game_state):
 
 
 def get_opponent_moonwalkwarning(game_state):
-    return game_state.players[2].moonwalkwarning
+    if game_state.players[2].moonwalkwarning:
+        return 1
+    return -1
 
 
 def get_opponent_off_stage(game_state):
-    return game_state.players[2].off_stage
+    if game_state.players[2].off_stage:
+        return 1
+    return -1
 
 
 def get_opponent_on_ground(game_state):
-    return game_state.players[2].on_ground
+    if game_state.players[2].on_ground:
+        return 1
+    return -1
 
 
 def get_opponent_shield_strength(game_state):
@@ -210,11 +262,11 @@ def get_opponent_speed_y_self(game_state):
     return game_state.players[2].speed_y_self
 
 
-def get_random_input():
+def get_random_input(game_state):
     return random.uniform(-1.0, 1.0)
 
 
-#actions
+# actions
 def tilt_c_stick_x(controller):
     controller.tilt_analog(melee.enums.Button.BUTTON_C, 0.5, 0)
 
@@ -261,4 +313,3 @@ def press_R(controller):
 
 def do_nothing(controller):
     return controller.release_all()
-

@@ -60,7 +60,7 @@ class Graph:
         edge_labels = nx.get_edge_attributes(G, "weight")
         for value in edge_labels.keys():
             edge_label = {value: edge_labels[value]}
-            position = random.randrange(10, 40) / 100
+            position = random.randrange(20, 40) / 100
             position2 = random.randrange(60, 90) / 100
             choice = random.choice([position, position2])
             nx.draw_networkx_edge_labels(G, pos, edge_label, label_pos=choice)

@@ -7,6 +7,11 @@ import time
 import melee
 import random
 
+from Game.create_all_genes import generate
+from NEAT import Genome_manager
+from NEAT.graph.visualise_genome import Graph
+
+
 
 # This example program demonstrates how to use the Melee API to run a console,
 #   setup controllers, and send button presses over to a console
@@ -105,6 +110,14 @@ controller_opponent.connect()
 costume = 0
 framedata = melee.framedata.FrameData()
 
+# ia stuff here
+gene_manager = generate()
+genome_manager = Genome_manager.GenomeManager()
+genome_manager.create_genome(gene_manager, 20)
+Graph().create_graph(genome_manager.genomes[0], gene_manager)
+
+refreshed = True
+i=0
 # Main loop
 while True:
     # "step" to the next frame
@@ -119,8 +132,19 @@ while True:
 
     # What menu are we in?
     if gamestate.menu_state in [melee.Menu.IN_GAME, melee.Menu.SUDDEN_DEATH]:
-        pass
+        if i == 1:
+            controller.release_all()
+            i=0
+        else:
+            i+=1
+            gene_chosen = genome_manager.genomes[0].calculate(gamestate, controller)
+            gene_chosen.behavior(controller)
+            refreshed = False
     else:
+        if not refreshed:
+            genome_manager.genomes[0].mutate(40, 2)
+            Graph().create_graph(genome_manager.genomes[0], gene_manager)
+        refreshed = True
         melee.MenuHelper.menu_helper_simple(gamestate,
                                             controller_opponent,
                                             melee.Character.FOX,
