@@ -145,121 +145,121 @@ def get_speed_y_self(game_state):
 
 
 def get_opponent_ecb_bottom(game_state):
-    coord = game_state.players[2].ecb_bottom
+    coord = game_state.players[4].ecb_bottom
     coord = flatten_position(coord[0], coord[1])
     return coord
 
 
 def get_opponent_ecb_left(game_state):
-    coord = game_state.players[2].ecb_left
+    coord = game_state.players[4].ecb_left
     coord = flatten_position(coord[0], coord[1])
     return coord
 
 
 def get_opponent_ecb_right(game_state):
-    coord = game_state.players[2].ecb_right
+    coord = game_state.players[4].ecb_right
     coord = flatten_position(coord[0], coord[1])
     return coord
 
 
 def get_opponent_ecb_top(game_state):
-    coord = game_state.players[2].ecb_top
+    coord = game_state.players[4].ecb_top
     coord = flatten_position(coord[0], coord[1])
     return coord
 
 
 def get_opponent_position(game_state):
-    coord = game_state.players[2].position
+    coord = game_state.players[4].position
     coord = flatten_position(coord.x, coord.y)
     return coord
 
 
 def get_opponent_stock(game_state):
-    return game_state.players[2].stock
+    return game_state.players[4].stock
 
 
 def get_opponent_percent(game_state):
-    return game_state.players[2].percent
+    return game_state.players[4].percent
 
 
 def get_opponent_action(game_state):
-    return game_state.players[2].action
+    return game_state.players[4].action
 
 
 def get_opponent_action_frame(game_state):
-    return game_state.players[2].action_frame
+    return game_state.players[4].action_frame
 
 
 def get_opponent_facing(game_state):
-    if game_state.players[2].facing:
+    if game_state.players[4].facing:
         return 1
     return -1
 
 
 def get_opponent_hitlag_left(game_state):
-    if game_state.players[2].hitlag_left:
+    if game_state.players[4].hitlag_left:
         return 1
     return -1
 
 
 def get_opponent_hitstun_frames_left(game_state):
-    return game_state.players[2].hitstun_frames_left
+    return game_state.players[4].hitstun_frames_left
 
 
 def get_opponent_invulnerability_left(game_state):
-    return game_state.players[2].invulnerability_left
+    return game_state.players[4].invulnerability_left
 
 
 def get_opponent_invulnerable(game_state):
-    if game_state.players[2].invulnerable:
+    if game_state.players[4].invulnerable:
         return 1
     return -1
 
 
 def get_opponent_jumps_left(game_state):
-    return game_state.players[2].jumps_left
+    return game_state.players[4].jumps_left
 
 
 def get_opponent_moonwalkwarning(game_state):
-    if game_state.players[2].moonwalkwarning:
+    if game_state.players[4].moonwalkwarning:
         return 1
     return -1
 
 
 def get_opponent_off_stage(game_state):
-    if game_state.players[2].off_stage:
+    if game_state.players[4].off_stage:
         return 1
     return -1
 
 
 def get_opponent_on_ground(game_state):
-    if game_state.players[2].on_ground:
+    if game_state.players[4].on_ground:
         return 1
     return -1
 
 
 def get_opponent_shield_strength(game_state):
-    return game_state.players[2].shield_strength
+    return game_state.players[4].shield_strength
 
 
 def get_opponent_speed_air_x_self(game_state):
-    return game_state.players[2].speed_air_x_self
+    return game_state.players[4].speed_air_x_self
 
 
 def get_opponent_speed_ground_x_self(game_state):
-    return game_state.players[2].speed_ground_x_self
+    return game_state.players[4].speed_ground_x_self
 
 
 def get_opponent_speed_x_attack(game_state):
-    return game_state.players[2].speed_x_attack
+    return game_state.players[4].speed_x_attack
 
 
 def get_opponent_speed_y_attack(game_state):
-    return game_state.players[2].speed_y_attack
+    return game_state.players[4].speed_y_attack
 
 
 def get_opponent_speed_y_self(game_state):
-    return game_state.players[2].speed_y_self
+    return game_state.players[4].speed_y_self
 
 
 def get_random_input(game_state):

@@ -11,9 +11,7 @@ from Game.create_all_genes import generate
 from NEAT import Genome_manager
 from NEAT.graph.visualise_genome import Graph
 
-
-
-# This example program demonstrates how to use the Melee API to run a console,
+#  This example program demonstrates how to use the Melee API to run a console,
 #   setup controllers, and send button presses over to a console
 
 def check_port(value):
@@ -56,6 +54,7 @@ if args.debug:
 #   The Console represents the virtual or hardware system Melee is playing on.
 #   Through this object, we can get "GameState" objects per-frame so that your
 #       bot can actually "see" what's happening in the game
+
 console = melee.Console(path="/Users/alessio/Library/Application Support/Slippi Launcher/netplay/Slippi Dolphin.app",
                         slippi_address=args.address,
                         logger=log, )
@@ -69,7 +68,7 @@ controller = melee.Controller(console=console,
                               type=melee.ControllerType.STANDARD)
 
 controller_opponent = melee.Controller(console=console,
-                                       port=2,
+                                       port=4,
                                        type=melee.ControllerType.STANDARD)
 
 
@@ -114,6 +113,7 @@ framedata = melee.framedata.FrameData()
 gene_manager = generate()
 genome_manager = Genome_manager.GenomeManager()
 genome_manager.create_genome(gene_manager, 20)
+genome_manager.create_genome(gene_manager, 20)
 Graph().create_graph(genome_manager.genomes[0], gene_manager)
 
 refreshed = True
@@ -133,13 +133,16 @@ while True:
     # What menu are we in?
     if gamestate.menu_state in [melee.Menu.IN_GAME, melee.Menu.SUDDEN_DEATH]:
         if i == 1:
-            controller.release_all()
             i=0
+            controller.release_all()
+            gene_chosen = genome_manager.genomes[1].calculate(gamestate, controller_opponent)
+            gene_chosen.behavior(controller_opponent)
         else:
             i+=1
+            refreshed = False
             gene_chosen = genome_manager.genomes[0].calculate(gamestate, controller)
             gene_chosen.behavior(controller)
-            refreshed = False
+            controller_opponent.release_all()
     else:
         if not refreshed:
             genome_manager.genomes[0].mutate(40, 2)
@@ -147,12 +150,11 @@ while True:
         refreshed = True
         melee.MenuHelper.menu_helper_simple(gamestate,
                                             controller_opponent,
-                                            melee.Character.FOX,
+                                            melee.Character.MARTH,
                                             melee.Stage.BATTLEFIELD,
                                             args.connect_code,
-                                            9,
                                             autostart=True,
-                                            swag=False)
+                                            swag=True)
         melee.MenuHelper.menu_helper_simple(gamestate,
                                             controller,
                                             melee.Character.MARTH,
@@ -160,7 +162,7 @@ while True:
                                             args.connect_code,
                                             costume=costume,
                                             autostart=False,
-                                            swag=False)
+                                            swag=True)
 
 
         # If we're not in game, don't log the frame
