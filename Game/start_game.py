@@ -154,7 +154,7 @@ while True:
                                             melee.Stage.BATTLEFIELD,
                                             args.connect_code,
                                             autostart=True,
-                                            swag=True)
+                                            swag=False)
         melee.MenuHelper.menu_helper_simple(gamestate,
                                             controller,
                                             melee.Character.MARTH,
@@ -162,7 +162,7 @@ while True:
                                             args.connect_code,
                                             costume=costume,
                                             autostart=False,
-                                            swag=True)
+                                            swag=False)
 
 
         # If we're not in game, don't log the frame

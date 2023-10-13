@@ -65,7 +65,7 @@ def get_percent(game_state):
 
 
 def get_action(game_state):
-    return game_state.players[1].action
+    return game_state.players[1].action.value
 
 
 def get_action_frame(game_state):

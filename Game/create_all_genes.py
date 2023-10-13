@@ -15,7 +15,7 @@ def generate():
     gene_manager.add_gene("position", "sensor", all_functions.get_position)
     gene_manager.add_gene("stock", "sensor", all_functions.get_stock)
     gene_manager.add_gene("percent", "sensor", all_functions.get_percent)
-    #gene_manager.add_gene("action", "sensor", all_functions.get_action)
+    gene_manager.add_gene("action", "sensor", all_functions.get_action)
     gene_manager.add_gene("action_frame", "sensor", all_functions.get_action_frame)
     gene_manager.add_gene("facing", "sensor", all_functions.get_facing)
     gene_manager.add_gene("hitlag_left", "sensor", all_functions.get_hitlag_left)
