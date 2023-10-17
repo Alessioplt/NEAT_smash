@@ -7,7 +7,7 @@ class Genome:
         self.genes = []
         self.genes_score = {}
         self.gene_manager = gene_manager
-        self.fitness = None
+        self.score = 0
 
     def create(self, connection_number):
         for _ in range(connection_number):
@@ -68,7 +68,7 @@ class Genome:
                     best_output = [gene, self.genes_score[gene]]
                 elif self.genes_score[gene] > best_output[1]:
                     best_output = [gene, self.genes_score[gene]]
-        print(best_output[0].name, best_output[1])
+        #print(best_output[0].name, best_output[1])
         return best_output[0]
     # -------------------Mutation------------------------------------------------
     # add randomly a new node (pick an already existing if not in this genome)

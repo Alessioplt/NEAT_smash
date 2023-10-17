@@ -74,7 +74,7 @@ def calculate_fitness(genome_1, genome_2, excess_coefficient, disjoint_coefficie
     disjoint_math = (disjoint_coefficient * number_disjoint_genes) / biggest_genome
     weight_math = weight_diff_coefficient * weight_diff
     compatibility_distance = abs(excess_math) + abs(disjoint_math) + abs(weight_math)
-    #print("excess: " + str(excess_math) + " disjoint: " + str(disjoint_math) + " weight: " + str(weight_math) + " compatibility: " + str(compatibility_distance))
+    # print("excess: " + str(excess_math) + " disjoint: " + str(disjoint_math) + " weight: " + str(weight_math) + " compatibility: " + str(compatibility_distance))
     return compatibility_distance
 
 
@@ -129,3 +129,36 @@ class GenomeManager:
             else:
                 self.speciation[key_holder].append(value)
         return self.speciation
+
+    def save_population(self, path, generation_number):
+        file = open(path, "w")
+        file.write("generation: " + str(generation_number) + "\n")
+        speciation_inc = 1
+        for speciation in self.speciation:
+            value = '{'
+            value += f'"score of {speciation_inc}' + '": {'
+            speciation_inc += 1
+            for connection in speciation.connections:
+                value += self.to_text(
+                    connection.node_in.name + " -> " + connection.node_out.name) + ': [' + self.to_text(
+                    speciation.connections[connection][0]) + ',' + self.to_text(
+                    speciation.connections[connection][1]) + '],'
+            value = value[:-1]
+            value += '},'
+            for genome in self.speciation[speciation]:
+                value +=  f'"score of {speciation_inc}' + '": {'
+                speciation_inc += 1
+                for connection in genome.connections:
+                    value += self.to_text(connection.node_in.name + " -> " + connection.node_out.name) + ': [' + self.to_text(
+                        genome.connections[connection][0]) + ',' + self.to_text(
+                        genome.connections[connection][1]) + '],'
+                value = value[:-1]
+                value += '},'
+            value = value[:-1]
+            value += '}\n'
+            #write in file
+            file.write(value)
+            print(value)
+
+    def to_text(self, text):
+        return '"' + str(text) + '"'

@@ -112,17 +112,24 @@ framedata = melee.framedata.FrameData()
 # ia stuff here
 gene_manager = generate()
 genome_manager = Genome_manager.GenomeManager()
-genomeP1 = genome_manager.create_genome(gene_manager, 5)
-genomeP4 = genome_manager.create_genome(gene_manager, 5)
-Graph().create_graph(genomeP1, gene_manager)
+genome_manager.create_genome(gene_manager, 5)
+genome_manager.create_genome(gene_manager, 5)
+genome_manager.create_genome(gene_manager, 5)
+genome_manager.create_genome(gene_manager, 5)
+genome_manager.create_genome(gene_manager, 5)
+Graph().create_graph(genome_manager.genomes[0], gene_manager)
 
 refreshed = True
-i=0
+frame=0
 percentP1 = 0
 percentP4 = 0
 stockP1 = 4
 stockP4 = 4
 generation = 0
+
+actualGenome = 0
+bestScore = -999999
+bestGenome = None
 # Main loop
 while True:
     # "step" to the next frame
@@ -137,61 +144,84 @@ while True:
 
     # What menu are we in?
     if gamestate.menu_state in [melee.Menu.IN_GAME, melee.Menu.SUDDEN_DEATH]:
-        if i == 1:
-            i=0
+        if frame == 1:
+            frame = 0
             controller.release_all()
-            gene_chosen = genomeP4.calculate(gamestate, controller_opponent)
-            gene_chosen.behavior(controller_opponent)
         else:
-            i+=1
+            frame += 1
             refreshed = False
-            gene_chosen = genomeP1.calculate(gamestate, controller)
+            gene_chosen = genome_manager.genomes[actualGenome].calculate(gamestate, controller)
             gene_chosen.behavior(controller)
-            controller_opponent.release_all()
         if gamestate.players[1].percent > percentP1:
-            genomeP1.score -= gamestate.players[1].percent - percentP1
-            genomeP4.score += gamestate.players[1].percent - percentP1
+            #print(f"percent p1 start: {genome_manager.genomes[actualGenome].score}")
+            genome_manager.genomes[actualGenome].score -= gamestate.players[1].percent - percentP1
             percentP1 = gamestate.players[1].percent
+            #print(f"percent p1 end: {genome_manager.genomes[actualGenome].score}")
         if gamestate.players[4].percent > percentP4:
-            genomeP4.score -= gamestate.players[4].percent - percentP4
-            genomeP1.score += gamestate.players[4].percent - percentP4
+            #print(f"percent p4 start: {genome_manager.genomes[actualGenome].score}")
+            genome_manager.genomes[actualGenome].score += gamestate.players[4].percent - percentP4
             percentP4 = gamestate.players[4].percent
+            #print(f"percent p4 end: {genome_manager.genomes[actualGenome].score}")
         if gamestate.players[1].stock < stockP1:
-            genomeP1.score -= 500
-            genomeP4.score += 500
+            #print(f"stock p1 start: {genome_manager.genomes[actualGenome].score}")
+            genome_manager.genomes[actualGenome].score -= 500
             stockP1 = gamestate.players[1].stock
+            percentP1 = 0
+            #print(f"stock p1 end: {genome_manager.genomes[actualGenome].score}")
         if gamestate.players[4].stock < stockP4:
-            genomeP4.score -= 500
-            genomeP1.score += 500
+            #print(f"stock p4 start: {genome_manager.genomes[actualGenome].score}")
+            genome_manager.genomes[actualGenome].score += 500
             stockP4 = gamestate.players[4].stock
-        genomeP4.score -= 0.01
-        genomeP1.score -= 0.01
+            percentP4 = 0
+            #print(f"stock p4 start: {genome_manager.genomes[actualGenome].score}")
+        #genome_manager.genomes[actualGenome].score -= 0.01
     else:
         if not refreshed:
-            print(f"generation {generation}: \nPlayer1: ", genomeP1.score, "\nPlayer2:", genomeP4.score)
-            generation += 1
-            if genomeP4.score > genomeP1.score:
-                genomeP4.mutate(10, 1)
-                genomeP1 = genome_manager.create_genome(gene_manager, 5)
+            percentP1 = 0
+            percentP4 = 0
+            stockP1 = 4
+            stockP4 = 4
+            if actualGenome < 4:
+                print(f"Genome {actualGenome} of Generation {generation} has a score of {genome_manager.genomes[actualGenome].score}")
+                if genome_manager.genomes[actualGenome].score > bestScore:
+                    bestGenome = genome_manager.genomes[actualGenome]
+                actualGenome+=1
             else:
-                genomeP1.mutate(10, 1)
-                genomeP4 = genome_manager.create_genome(gene_manager, 5)
-            Graph().create_graph(genomeP1, gene_manager)
+                print(f"Génération {generation}: "
+                      f"\nGenome 1: {genome_manager.genomes[0].score}"
+                      f"\nGenome 2: {genome_manager.genomes[1].score}"
+                      f"\nGenome 3: {genome_manager.genomes[2].score}"
+                      f"\nGenome 4: {genome_manager.genomes[3].score}"
+                      f"\nGenome 5: {genome_manager.genomes[4].score}")
+                generation += 1
+                bestGenome.mutate(10, 1)
+                Graph().create_graph(bestGenome, gene_manager)
+                for value in genome_manager.genomes:
+                    if value != bestGenome:
+                        genome_manager.genomes.remove(value)
+                genome_manager.create_genome(gene_manager, 5)
+                genome_manager.create_genome(gene_manager, 5)
+                genome_manager.create_genome(gene_manager, 5)
+                genome_manager.create_genome(gene_manager, 5)
+                actualGenome = 0
+                bestScore = -999999
+                bestGenome = None
         refreshed = True
-        melee.MenuHelper.menu_helper_simple(gamestate,
-                                            controller_opponent,
-                                            melee.Character.MARTH,
-                                            melee.Stage.BATTLEFIELD,
-                                            args.connect_code,
-                                            autostart=True,
-                                            swag=False)
         melee.MenuHelper.menu_helper_simple(gamestate,
                                             controller,
                                             melee.Character.MARTH,
                                             melee.Stage.BATTLEFIELD,
                                             args.connect_code,
-                                            costume=costume,
                                             autostart=False,
+                                            swag=False)
+        melee.MenuHelper.menu_helper_simple(gamestate,
+                                            controller_opponent,
+                                            melee.Character.MARTH,
+                                            melee.Stage.BATTLEFIELD,
+                                            args.connect_code,
+                                            cpu_level=9,
+                                            costume=costume,
+                                            autostart=True,
                                             swag=False)
 
 
